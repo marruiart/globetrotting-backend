@@ -677,6 +677,79 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
 }
 
+export interface ApiDestinationDestination extends Schema.CollectionType {
+  collectionName: 'destinations';
+  info: {
+    singularName: 'destination';
+    pluralName: 'destinations';
+    displayName: 'Destination';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String & Attribute.Required;
+    type: Attribute.String;
+    dimension: Attribute.String;
+    description: Attribute.Text;
+    image: Attribute.Media;
+    price: Attribute.Decimal;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::destination.destination',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::destination.destination',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiExtendedUserExtendedUser extends Schema.CollectionType {
+  collectionName: 'extended_users';
+  info: {
+    singularName: 'extended-user';
+    pluralName: 'extended-users';
+    displayName: 'Extended-user';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    nickname: Attribute.String & Attribute.Required;
+    age: Attribute.Date;
+    avatar: Attribute.Media;
+    name: Attribute.String;
+    surname: Attribute.String;
+    user_id: Attribute.Relation<
+      'api::extended-user.extended-user',
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::extended-user.extended-user',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::extended-user.extended-user',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -693,6 +766,8 @@ declare module '@strapi/types' {
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
+      'api::destination.destination': ApiDestinationDestination;
+      'api::extended-user.extended-user': ApiExtendedUserExtendedUser;
     }
   }
 }
