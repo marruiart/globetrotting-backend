@@ -4,10 +4,11 @@
   "info": {
     "singularName": "destination",
     "pluralName": "destinations",
-    "displayName": "Destination"
+    "displayName": "Destination",
+    "description": ""
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
@@ -25,14 +26,15 @@
       "type": "text"
     },
     "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
     },
     "price": {
       "type": "decimal"

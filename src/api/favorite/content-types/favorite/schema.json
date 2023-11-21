@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "favorites",
+  "info": {
+    "singularName": "favorite",
+    "pluralName": "favorites",
+    "displayName": "Favorite",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "user_id": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::extended-user.extended-user",
+      "inversedBy": "favorites"
+    },
+    "destination": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::destination.destination"
+    }
+  }
+}

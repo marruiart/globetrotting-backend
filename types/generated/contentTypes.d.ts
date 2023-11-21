@@ -683,9 +683,10 @@ export interface ApiDestinationDestination extends Schema.CollectionType {
     singularName: 'destination';
     pluralName: 'destinations';
     displayName: 'Destination';
+    description: '';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     name: Attribute.String & Attribute.Required;
@@ -696,7 +697,6 @@ export interface ApiDestinationDestination extends Schema.CollectionType {
     price: Attribute.Decimal;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
       'api::destination.destination',
       'oneToOne',
@@ -733,6 +733,11 @@ export interface ApiExtendedUserExtendedUser extends Schema.CollectionType {
       'oneToOne',
       'plugin::users-permissions.user'
     >;
+    favorites: Attribute.Relation<
+      'api::extended-user.extended-user',
+      'oneToMany',
+      'api::favorite.favorite'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -743,6 +748,45 @@ export interface ApiExtendedUserExtendedUser extends Schema.CollectionType {
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'api::extended-user.extended-user',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiFavoriteFavorite extends Schema.CollectionType {
+  collectionName: 'favorites';
+  info: {
+    singularName: 'favorite';
+    pluralName: 'favorites';
+    displayName: 'Favorite';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    user_id: Attribute.Relation<
+      'api::favorite.favorite',
+      'manyToOne',
+      'api::extended-user.extended-user'
+    >;
+    destination: Attribute.Relation<
+      'api::favorite.favorite',
+      'oneToOne',
+      'api::destination.destination'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::favorite.favorite',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::favorite.favorite',
       'oneToOne',
       'admin::user'
     > &
@@ -768,6 +812,7 @@ declare module '@strapi/types' {
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'api::destination.destination': ApiDestinationDestination;
       'api::extended-user.extended-user': ApiExtendedUserExtendedUser;
+      'api::favorite.favorite': ApiFavoriteFavorite;
     }
   }
 }
