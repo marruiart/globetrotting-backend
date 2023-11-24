@@ -4,7 +4,7 @@
   "info": {
     "singularName": "destination",
     "pluralName": "destinations",
-    "displayName": "Destination",
+    "displayName": "destination",
     "description": ""
   },
   "options": {
@@ -13,8 +13,7 @@
   "pluginOptions": {},
   "attributes": {
     "name": {
-      "type": "string",
-      "required": true
+      "type": "string"
     },
     "type": {
       "type": "string"
@@ -38,6 +37,16 @@
     },
     "price": {
       "type": "decimal"
+    },
+    "bookings": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::booking.booking",
+      "mappedBy": "destination"
+    },
+    "isLabeled": {
+      "type": "boolean",
+      "default": false
     }
   }
 }

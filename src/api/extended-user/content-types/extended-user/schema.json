@@ -4,29 +4,30 @@
   "info": {
     "singularName": "extended-user",
     "pluralName": "extended-users",
-    "displayName": "Extended-user"
+    "displayName": "extended-user",
+    "description": ""
   },
   "options": {
-    "draftAndPublish": false
+    "draftAndPublish": true
   },
   "pluginOptions": {},
   "attributes": {
     "nickname": {
-      "type": "string",
-      "required": true
+      "type": "string"
     },
     "age": {
       "type": "date"
     },
     "avatar": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
     },
     "name": {
       "type": "string"
@@ -38,12 +39,6 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "plugin::users-permissions.user"
-    },
-    "favorites": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::favorite.favorite",
-      "mappedBy": "user_id"
     }
   }
 }

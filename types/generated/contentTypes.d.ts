@@ -677,24 +677,170 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
 }
 
+export interface ApiAgentAgent extends Schema.CollectionType {
+  collectionName: 'agents';
+  info: {
+    singularName: 'agent';
+    pluralName: 'agents';
+    displayName: 'Agent';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    user_id: Attribute.Relation<
+      'api::agent.agent',
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+    bookings: Attribute.Relation<
+      'api::agent.agent',
+      'oneToMany',
+      'api::booking.booking'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::agent.agent',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::agent.agent',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiBookingBooking extends Schema.CollectionType {
+  collectionName: 'bookings';
+  info: {
+    singularName: 'booking';
+    pluralName: 'bookings';
+    displayName: 'Booking';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    destination: Attribute.Relation<
+      'api::booking.booking',
+      'manyToOne',
+      'api::destination.destination'
+    >;
+    client: Attribute.Relation<
+      'api::booking.booking',
+      'manyToOne',
+      'api::client.client'
+    >;
+    agent: Attribute.Relation<
+      'api::booking.booking',
+      'manyToOne',
+      'api::agent.agent'
+    >;
+    start: Attribute.Date;
+    end: Attribute.Date;
+    rating: Attribute.Decimal &
+      Attribute.SetMinMax<{
+        min: 1;
+        max: 5;
+      }>;
+    isActive: Attribute.Boolean & Attribute.DefaultTo<true>;
+    isConfirmed: Attribute.Boolean & Attribute.DefaultTo<false>;
+    travelers: Attribute.Integer;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::booking.booking',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::booking.booking',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiClientClient extends Schema.CollectionType {
+  collectionName: 'clients';
+  info: {
+    singularName: 'client';
+    pluralName: 'clients';
+    displayName: 'Client';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    bookings: Attribute.Relation<
+      'api::client.client',
+      'oneToMany',
+      'api::booking.booking'
+    >;
+    favorites: Attribute.Relation<
+      'api::client.client',
+      'oneToMany',
+      'api::favorite.favorite'
+    >;
+    user_id: Attribute.Relation<
+      'api::client.client',
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::client.client',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::client.client',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiDestinationDestination extends Schema.CollectionType {
   collectionName: 'destinations';
   info: {
     singularName: 'destination';
     pluralName: 'destinations';
-    displayName: 'Destination';
+    displayName: 'destination';
     description: '';
   };
   options: {
     draftAndPublish: false;
   };
   attributes: {
-    name: Attribute.String & Attribute.Required;
+    name: Attribute.String;
     type: Attribute.String;
     dimension: Attribute.String;
     description: Attribute.Text;
     image: Attribute.Media;
     price: Attribute.Decimal;
+    bookings: Attribute.Relation<
+      'api::destination.destination',
+      'oneToMany',
+      'api::booking.booking'
+    >;
+    isLabeled: Attribute.Boolean & Attribute.DefaultTo<false>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -717,13 +863,14 @@ export interface ApiExtendedUserExtendedUser extends Schema.CollectionType {
   info: {
     singularName: 'extended-user';
     pluralName: 'extended-users';
-    displayName: 'Extended-user';
+    displayName: 'extended-user';
+    description: '';
   };
   options: {
-    draftAndPublish: false;
+    draftAndPublish: true;
   };
   attributes: {
-    nickname: Attribute.String & Attribute.Required;
+    nickname: Attribute.String;
     age: Attribute.Date;
     avatar: Attribute.Media;
     name: Attribute.String;
@@ -733,13 +880,9 @@ export interface ApiExtendedUserExtendedUser extends Schema.CollectionType {
       'oneToOne',
       'plugin::users-permissions.user'
     >;
-    favorites: Attribute.Relation<
-      'api::extended-user.extended-user',
-      'oneToMany',
-      'api::favorite.favorite'
-    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
       'api::extended-user.extended-user',
       'oneToOne',
@@ -767,15 +910,15 @@ export interface ApiFavoriteFavorite extends Schema.CollectionType {
     draftAndPublish: false;
   };
   attributes: {
-    user_id: Attribute.Relation<
-      'api::favorite.favorite',
-      'manyToOne',
-      'api::extended-user.extended-user'
-    >;
     destination: Attribute.Relation<
       'api::favorite.favorite',
       'oneToOne',
       'api::destination.destination'
+    >;
+    client: Attribute.Relation<
+      'api::favorite.favorite',
+      'manyToOne',
+      'api::client.client'
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
@@ -810,6 +953,9 @@ declare module '@strapi/types' {
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
+      'api::agent.agent': ApiAgentAgent;
+      'api::booking.booking': ApiBookingBooking;
+      'api::client.client': ApiClientClient;
       'api::destination.destination': ApiDestinationDestination;
       'api::extended-user.extended-user': ApiExtendedUserExtendedUser;
       'api::favorite.favorite': ApiFavoriteFavorite;

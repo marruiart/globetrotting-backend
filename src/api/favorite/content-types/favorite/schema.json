@@ -12,16 +12,16 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "user_id": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::extended-user.extended-user",
-      "inversedBy": "favorites"
-    },
     "destination": {
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::destination.destination"
+    },
+    "client": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::client.client",
+      "inversedBy": "favorites"
     }
   }
 }
