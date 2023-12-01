@@ -686,7 +686,7 @@ export interface ApiAgentAgent extends Schema.CollectionType {
     description: '';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     user_id: Attribute.Relation<
@@ -701,7 +701,6 @@ export interface ApiAgentAgent extends Schema.CollectionType {
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
       'api::agent.agent',
       'oneToOne',
@@ -726,7 +725,7 @@ export interface ApiBookingBooking extends Schema.CollectionType {
     description: '';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     destination: Attribute.Relation<
@@ -756,7 +755,6 @@ export interface ApiBookingBooking extends Schema.CollectionType {
     travelers: Attribute.Integer;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
       'api::booking.booking',
       'oneToOne',
@@ -781,7 +779,7 @@ export interface ApiClientClient extends Schema.CollectionType {
     description: '';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     bookings: Attribute.Relation<
@@ -801,7 +799,6 @@ export interface ApiClientClient extends Schema.CollectionType {
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
       'api::client.client',
       'oneToOne',
@@ -867,7 +864,7 @@ export interface ApiExtendedUserExtendedUser extends Schema.CollectionType {
     description: '';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     nickname: Attribute.String;
@@ -882,7 +879,6 @@ export interface ApiExtendedUserExtendedUser extends Schema.CollectionType {
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
       'api::extended-user.extended-user',
       'oneToOne',
