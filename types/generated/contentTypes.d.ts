@@ -689,7 +689,7 @@ export interface ApiAgentAgent extends Schema.CollectionType {
     draftAndPublish: false;
   };
   attributes: {
-    user_id: Attribute.Relation<
+    user: Attribute.Relation<
       'api::agent.agent',
       'oneToOne',
       'plugin::users-permissions.user'
@@ -792,7 +792,7 @@ export interface ApiClientClient extends Schema.CollectionType {
       'oneToMany',
       'api::favorite.favorite'
     >;
-    user_id: Attribute.Relation<
+    user: Attribute.Relation<
       'api::client.client',
       'oneToOne',
       'plugin::users-permissions.user'
@@ -872,7 +872,7 @@ export interface ApiExtendedUserExtendedUser extends Schema.CollectionType {
     avatar: Attribute.Media;
     name: Attribute.String;
     surname: Attribute.String;
-    user_id: Attribute.Relation<
+    user: Attribute.Relation<
       'api::extended-user.extended-user',
       'oneToOne',
       'plugin::users-permissions.user'

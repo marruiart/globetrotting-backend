@@ -35,7 +35,7 @@
     "surname": {
       "type": "string"
     },
-    "user_id": {
+    "user": {
       "type": "relation",
       "relation": "oneToOne",
       "target": "plugin::users-permissions.user"
